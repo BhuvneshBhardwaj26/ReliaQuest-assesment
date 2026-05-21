@@ -1,6 +1,5 @@
 package com.challenge.api.controller;
 
-import com.challenge.api.model.Employee;
 import com.challenge.api.service.EmployeeService;
 import com.challenge.api.dto.CreateEmployeeRequest;
 import com.challenge.api.dto.CreateEmployeeResponse;
@@ -15,7 +14,7 @@ import java.util.UUID;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.server.ResponseStatusException;
+
 
 /**
  * Fill in the missing aspects of this Spring Web REST Controller. Don't forget to add a Service layer.

@@ -1,25 +1,28 @@
-    package com.challenge.api.service.impl;
+package com.challenge.api.service.impl;
 
-    import com.challenge.api.dto.CreateEmployeeRequest;
-    import com.challenge.api.model.Employee;    
-    import com.challenge.api.service.EmployeeService;
-    import com.challenge.api.dto.CreateEmployeeResponse;
-    import java.util.List;
-    import java.util.UUID;
-    import org.springframework.stereotype.Service;
-    import java.util.Map;
-    import java.util.HashMap;
-    import java.util.ArrayList;
-    import org.springframework.http.HttpStatus;
-    import org.springframework.web.server.ResponseStatusException;
+import com.challenge.api.dto.CreateEmployeeRequest;
+import com.challenge.api.dto.CreateEmployeeResponse;
+import com.challenge.api.dto.EmployeeResponse;
+import com.challenge.api.model.Employee;
+import com.challenge.api.model.impl.EmployeeImpl;
+import com.challenge.api.service.EmployeeService;
+import java.time.Instant;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.UUID;
+import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
-    @Service
-    public class EmployeeServiceImpl implements EmployeeService {
+@Service
+public class EmployeeServiceImpl implements EmployeeService {
 
-        private final Map<UUID, Employee> employeeStore = new HashMap<>();
+    private final Map<UUID, Employee> employeeStore = new HashMap<>();
 
-        public EmployeeServiceImpl() {
-        
+    public EmployeeServiceImpl() {
+
         Employee employeeOne = new EmployeeImpl();
 
         UUID employeeOneUuid = UUID.randomUUID();
@@ -53,57 +56,77 @@
         employeeStore.put(employeeTwoUuid, employeeTwo);
     }
 
-        @Override
-        public List<EmplooyeeResponse> getAllEmployees() {
+    @Override
+    public List<EmployeeResponse> getAllEmployees() {
+
         List<EmployeeResponse> responseList = new ArrayList<>();
 
-        for(Employee employee : employeeStore.values()){
+        for (Employee employee : employeeStore.values()) {
             responseList.add(mapToEmployeeResponse(employee));
         }
+
         return responseList;
-        }
-
-        @Override
-        public EmployeeResponse getEmployeeByUuid(UUID uuid) {
-            
-            Employee employee = employeeStore.get(uuid);
-            if(employee == null){
-                throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Employee not found with the provided UUID:" + uuid);
-            };
-            return mapToEmployeeResponse(employee);
-        }
-
-        @Override
-        public Employee createEmployee(CreateEmployeeRequest request) {
-            Employee employee = new EmployeeImpl();
-            UUID uuid = UUID.randomUUID();
-            employee.setUuid(uuid); 
-            employee.setFirstName(request.getFirstName());
-            employee.setLastName(request.getLastName());
-            employee.setFullName(request.getFirstName() + " " + request.getLastName());
-            employee.setSalary(request.getSalary());
-            employee.setAge(request.getAge());
-            employee.setJobTitle(request.getJobTitle());
-            employee.setEmail(request.getEmail());
-            employee.setDateOfJoining(request.getDateOfJoining());
-            employeeStore.put(uuid, employee);
-            return new CreateEmployeeResponse("Employee Created succesfully:",uuid
-            );}
-        private EmployeeResponse mapToEmployeeResponse(Employee employee){
-            EmployeeResponse response = new EmployeeResponse();
-            return new EmployeeResponse(
-            response.setUuid(employee.getUuid());
-            response.setFirstName(employee.getFirstName());
-            response.setLastName(employee.getLastName());
-            response.setFullName(employee.getFullName());
-            response.setSalary(employee.getSalary());
-            response.setAge(employee.getAge());
-            response.setJobTitle(employee.getJobTitle());
-            response.setEmail(employee.getEmail());
-                response.setDateOfJoining(employee.getDateOfJoining()
-            );
-
-            return response;
-        }
-
     }
+
+    @Override
+    public EmployeeResponse getEmployeeByUuid(UUID uuid) {
+
+        Employee employee = employeeStore.get(uuid);
+
+        if (employee == null) {
+            throw new ResponseStatusException(
+                    HttpStatus.NOT_FOUND,
+                    "Employee not found with provided UUID: " + uuid
+            );
+        }
+
+        return mapToEmployeeResponse(employee);
+    }
+
+    @Override
+    public CreateEmployeeResponse createEmployee(
+            CreateEmployeeRequest request
+    ) {
+
+        Employee employee = new EmployeeImpl();
+
+        UUID uuid = UUID.randomUUID();
+
+        employee.setUuid(uuid);
+        employee.setFirstName(request.getFirstName());
+        employee.setLastName(request.getLastName());
+        employee.setFullName(
+                request.getFirstName() + " " + request.getLastName()
+        );
+        employee.setSalary(request.getSalary());
+        employee.setAge(request.getAge());
+        employee.setJobTitle(request.getJobTitle());
+        employee.setEmail(request.getEmail());
+        employee.setContractHireDate(Instant.now());
+
+        employeeStore.put(uuid, employee);
+
+        return new CreateEmployeeResponse(
+                "Employee created successfully",
+                uuid
+        );
+    }
+
+    private EmployeeResponse mapToEmployeeResponse(Employee employee) {
+
+        EmployeeResponse response = new EmployeeResponse();
+
+        response.setUuid(employee.getUuid());
+        response.setFirstName(employee.getFirstName());
+        response.setLastName(employee.getLastName());
+        response.setFullName(employee.getFullName());
+        response.setSalary(employee.getSalary());
+        response.setAge(employee.getAge());
+        response.setJobTitle(employee.getJobTitle());
+        response.setEmail(employee.getEmail());
+        response.setContractHireDate(employee.getContractHireDate());
+        response.setContractTerminationDate(employee.getContractTerminationDate());
+
+        return response;
+    }
+}

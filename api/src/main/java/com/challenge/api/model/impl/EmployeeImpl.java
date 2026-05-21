@@ -3,6 +3,7 @@ package com.challenge.api.model.impl;
 import com.challenge.api.model.Employee;
 import java.time.Instant;
 import java.util.UUID;
+import lombok.Data;
 
 @Data
 public class EmployeeImpl implements Employee {
