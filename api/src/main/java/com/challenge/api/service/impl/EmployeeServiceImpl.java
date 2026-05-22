@@ -28,13 +28,13 @@ public class EmployeeServiceImpl implements EmployeeService {
         UUID employeeOneUuid = UUID.randomUUID();
 
         employeeOne.setUuid(employeeOneUuid);
-        employeeOne.setFirstName("John");
-        employeeOne.setLastName("Doe");
-        employeeOne.setFullName("John Doe");
+        employeeOne.setFirstName("Bhuvnesh");
+        employeeOne.setLastName("Bhardwaj");
+        employeeOne.setFullName("Bhuvnesh Bhardwaj");
         employeeOne.setSalary(85000);
         employeeOne.setAge(30);
         employeeOne.setJobTitle("Software Engineer");
-        employeeOne.setEmail("john.doe@reliaquest.com");
+        employeeOne.setEmail("bhuvneshbhardwaj49@gmail.com");
         employeeOne.setContractHireDate(Instant.now());
 
         employeeStore.put(employeeOneUuid, employeeOne);
@@ -44,13 +44,13 @@ public class EmployeeServiceImpl implements EmployeeService {
         UUID employeeTwoUuid = UUID.randomUUID();
 
         employeeTwo.setUuid(employeeTwoUuid);
-        employeeTwo.setFirstName("Sarah");
-        employeeTwo.setLastName("Smith");
-        employeeTwo.setFullName("Sarah Smith");
+        employeeTwo.setFirstName("Samarth Mishra");
+        employeeTwo.setLastName("Samarth Mishra");
+        employeeTwo.setFullName("Samarth Mishra");
         employeeTwo.setSalary(95000);
         employeeTwo.setAge(28);
         employeeTwo.setJobTitle("Backend Developer");
-        employeeTwo.setEmail("sarah.smith@reliaquest.com");
+        employeeTwo.setEmail("samarth78@gmail.com");
         employeeTwo.setContractHireDate(Instant.now());
 
         employeeStore.put(employeeTwoUuid, employeeTwo);
